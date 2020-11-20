@@ -14,7 +14,6 @@
   box-sizing: border-box;
 }
 body{
-  border: 1px solid red;
   line-height: 1.5;
 }
 a{

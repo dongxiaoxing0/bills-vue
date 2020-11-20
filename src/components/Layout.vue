@@ -20,7 +20,6 @@
     height: 100vh;
 }
 .content{
-    border: 1px solid red;
     flex-grow: 1;
     overflow: auto;
 }
