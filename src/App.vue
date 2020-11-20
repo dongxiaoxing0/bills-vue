@@ -15,25 +15,31 @@
 }
 body{
   border: 1px solid red;
+  line-height: 1.5;
 }
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+a{
+  text-decoration: none;
+  color: inherit;
 }
 
-#nav {
-  padding: 30px;
+// #app {
+//   font-family: Avenir, Helvetica, Arial, sans-serif;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   text-align: center;
+//   color: #2c3e50;
+// }
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+// #nav {
+//   padding: 30px;
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+//   a {
+//     font-weight: bold;
+//     color: #2c3e50;
+
+//     &.router-link-exact-active {
+//       color: #42b983;
+//     }
+//   }
+// }
 </style>
