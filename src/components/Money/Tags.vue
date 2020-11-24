@@ -18,8 +18,8 @@
   import { Component,Prop } from 'vue-property-decorator';
   @Component
   export default class Tags extends Vue {
-    @Prop(Array)dataSource: string[] | undefined;
-    selectedTags: string[] = [];
+    @Prop(Array)dataSource!: string[];
+    @Prop(Array)selectedTags!: string[];
     toggle(tag: string){
       const index = this.selectedTags.indexOf(tag);
       if(index >= 0){
@@ -27,6 +27,7 @@
       }else{
         this.selectedTags.push(tag);
       }
+      this.$emit('update:selectedTags',this.selectedTags)
     }
     create(){
       const newTag = window.prompt('请输入标签名');

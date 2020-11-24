@@ -7,17 +7,21 @@
 
 <script lang="ts">
   import Vue from 'vue'
-  import {Component} from 'vue-property-decorator';
+  import {Component,Prop,Watch} from 'vue-property-decorator';
 
   @Component
   export default class Types extends Vue{
-    type = '-'//'-'表示支出，'+'表示收入
+    @Prop(String) type: string|undefined//'-'表示支出，'+'表示收入
     selectType(type: string){//type只能是'-'和'+'中的一个
       if(type !== '-' && type !== '+'){
-        throw new Error('type is unknown')
+        throw new Error('type is unknown');
       }else{
-        this.type = type
+        this.type = type;
       }
+    }
+    @Watch('type')
+    onTypeChange(value: string){
+      this.$emit('update:type',value);
     }
   }
 </script>
