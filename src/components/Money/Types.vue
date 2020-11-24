@@ -16,12 +16,8 @@
       if(type !== '-' && type !== '+'){
         throw new Error('type is unknown');
       }else{
-        this.type = type;
+      this.$emit('update:type',type);
       }
-    }
-    @Watch('type')
-    onTypeChange(value: string){
-      this.$emit('update:type',value);
     }
   }
 </script>

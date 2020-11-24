@@ -16,6 +16,7 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component,Prop } from 'vue-property-decorator';
+  import tagListModel from '@/Models/tagListModel';
   @Component
   export default class Tags extends Vue {
     @Prop(Array)dataSource!: string[];
@@ -34,12 +35,7 @@
       if(newTag ===''){
         window.alert('标签不能为空');
       }else{
-        const index = (this.dataSource as string[]).indexOf(newTag!);
-        if(index >= 0){
-        window.alert('标签已经存在');
-        }else if(this.dataSource){
-          this.$emit('update:dataSource',[...this.dataSource, newTag]);
-        }
+        tagListModel.create(newTag!); 
       }
     }
   }
