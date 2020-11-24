@@ -1,12 +1,17 @@
 <template>
 <Layout>
-    <ol class="tags">
-        <li v-for="tag in tags" :key="tag">
-            <span>{{tag}}</span>
+    <div class="tags">
+        <router-link 
+        class="tag" 
+        v-for="tag in tags" 
+        :to="`/labels/editLabel/${tag.id}`"  
+        :key="tag.id"
+        >
+            <span>{{tag.name}}</span>
             <Icon name="right" /> 
-        </li>
+        </router-link>
         
-    </ol>
+    </div>
     <div class="createTag-wrapper">
         <button class="createTag" @click="createTag">新建标签</button>
     </div>
@@ -18,6 +23,7 @@
     import {Component} from 'vue-property-decorator';
     import tagListModel from '@/Models/tagListModel.ts';
 
+
     tagListModel.fetch();
 
     @Component
@@ -28,7 +34,7 @@
             if(tagName === ''){
                 window.alert('标签名不能为空')
             }else{
-                const message = tagListModel.create(tagName);
+                const message = tagListModel.create(tagName!);
                 if(message === 'success'){
                     window.alert('添加成功');
                 }else if(message === 'duplicated'){
@@ -44,7 +50,7 @@
     background: white;
     font-size: 16px;
     padding-left: 16px;
-    > li {
+    > .tag {
       min-height: 44px;
       display: flex;
       align-items: center;
