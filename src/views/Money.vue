@@ -2,7 +2,12 @@
   <Layout class-prefix="layout">
     <NumberPad :value.sync="record.amount" @new-record="updateRecordList"/>
     <Types :type.sync="record.type"/>
-    <Notes :notes-content.sync="record.notes"/>
+    <Notes 
+    filedName="备注"
+    placeholder="请输入备注"
+    :content.sync="record.notes"
+    />
+    {{record.notes}}
     <Tags :data-source.sync="tags" :currentSelectedTags.sync="record.tags"/>
   </Layout>
 </template>
@@ -39,7 +44,6 @@
       this.recordList.push(recordCopy);
       this.record.notes = '';
       this.record.tags = [];
-      console.log(this.record.tags);
     }
     @Watch('recordList')
     onRecordListChange() {
