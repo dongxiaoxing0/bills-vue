@@ -56,11 +56,6 @@
                 const result = tagListModel.update(this.tag.id,tagName);
                 if(result === 'success'){
                     this.tag.name = tagName;
-                    window.alert('修改成功');
-                }else if(result === 'duplicated'){
-                    window.alert('标签名已经存在');
-                }else{
-                    window.alert('标签不存在');
                 }
             }
         }
