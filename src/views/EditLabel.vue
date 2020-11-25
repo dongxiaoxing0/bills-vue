@@ -1,7 +1,7 @@
 <template>
     <Layout>
         <div class="navBar">
-            <Icon class="leftIcon" name="left"></Icon>
+            <span @click="goBack"><Icon class="leftIcon" name="left" ></Icon></span>
             <span class="title">编辑标签</span>
             <span class="rightIcon"></span>
         </div>
@@ -9,6 +9,7 @@
             <FormItem 
             filedName="标签名"
             placeholder="请输入标签名"
+            :content.sync="this.tag.name"
             />
         </div>
         <div class="button-wrapper">
@@ -24,14 +25,16 @@
     import FormItem from '@/components/Money/FormItem.vue';
     import Button from '@/components/Button.vue';
 
+
 @Component({components:{FormItem,Button}})
     export default class EditLabel extends Vue {
+        tag: Tag|undefined
         created(){
             const id = this.$route.params.id;
             tagListModel.fetch();
             const tag = tagListModel.data.filter(item => item.id === id)[0];
             if(tag){
-                console.log(tag);
+               this.tag = tag;
             }else{
                 this.$router.replace('/404');
             }
@@ -47,6 +50,9 @@
             }
 
         }
+        goBack(){
+            this.$router.back();
+        }
     }
 </script>
 
@@ -59,9 +65,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    > .title {
-    }
-    > .leftIcon {
+      .leftIcon {
       width: 24px;
       height: 24px;
     }
