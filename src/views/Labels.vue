@@ -13,7 +13,7 @@
         
     </div>
     <div class="createTag-wrapper">
-        <Button class="createTag" @click="createTag">新建标签</Button>
+        <Button class="createTag" @click.native="createTag">新建标签</Button>
     </div>
 </Layout>
 </template>
