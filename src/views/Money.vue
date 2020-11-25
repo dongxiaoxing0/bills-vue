@@ -3,7 +3,7 @@
     <NumberPad :value.sync="record.amount" @new-record="updateRecordList"/>
     <Types :type.sync="record.type"/>
     <Notes :notes-content.sync="record.notes"/>
-    <Tags :data-source.sync="tags" :selectedTags="record.tags"/>
+    <Tags :data-source.sync="tags" :currentSelectedTags.sync="record.tags"/>
   </Layout>
 </template>
 
@@ -27,7 +27,7 @@
   export default class Money extends Vue {
     tags = tagListModel.data
     record: RecordItem = {
-      tags:[],
+      tags:[] as Tag[],
       notes:'',
       type:'-',
       amount: 0,
@@ -39,6 +39,7 @@
       this.recordList.push(recordCopy);
       this.record.notes = '';
       this.record.tags = [];
+      console.log(this.record.tags);
     }
     @Watch('recordList')
     onRecordListChange() {

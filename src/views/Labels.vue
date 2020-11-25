@@ -28,7 +28,7 @@
 
     @Component
     export default class Labels extends Vue{
-        tags = tagListModel.data;
+        tags = tagListModel.data
         createTag(){
             const tagName = window.prompt('请输入标签名');
             if(tagName === ''){

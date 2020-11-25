@@ -1,17 +1,7 @@
 const itemName = 'tagList';
-type Tag = {
-    id: string;
-    name: string;
-};
-type TagList = {
-    data: Tag[];
-    fetch: () => Tag[];
-    save: () => void;
-    create: (tagName: string) => 'success' | 'duplicated' | 'void';
-};
 
 const tagListModel: TagList = {
-    data: [],
+    data: [] as Tag[],
     fetch() {
         this.data = JSON.parse(window.localStorage.getItem(itemName) || '[]');
         return this.data;
@@ -20,7 +10,6 @@ const tagListModel: TagList = {
         window.localStorage.setItem(itemName, JSON.stringify(this.data));
     },
     create(tagName: string) {
-        this.fetch();
         const tags = this.data.map(value => value.name);
         if (tags.indexOf(tagName) >= 0) {
             return 'duplicated';

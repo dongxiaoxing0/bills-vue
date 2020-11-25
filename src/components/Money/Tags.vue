@@ -6,25 +6,29 @@
       <ul class="current">
         <li v-for="tag in dataSource"
         @click="toggle(tag)"
-        :class="{selected:selectedTags.indexOf(tag) >= 0}"
-        :key="tag"
-        >{{tag}}</li>
+        :class="{selected:isSelected(tag.name)}"
+        :key="tag.id"
+        >{{tag.name}}</li>
       </ul>
     </div>
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component,Prop } from 'vue-property-decorator';
+  import { Component,Prop,Watch } from 'vue-property-decorator';
   import tagListModel from '@/Models/tagListModel';
   @Component
   export default class Tags extends Vue {
-    @Prop(Array)dataSource!: string[];
-    @Prop(Array)selectedTags!: string[];
-    toggle(tag: string){
-      const index = this.selectedTags.indexOf(tag);
-      if(index >= 0){
-        this.selectedTags.splice(index,1);
+    @Prop(Array)dataSource!: Tag[];
+    @Prop(Array)currentSelectedTags!: Tag[];
+    selectedTags = this.currentSelectedTags;
+    isSelected(tagName: string){
+      return this.selectedTags.filter(item => item.name === tagName)[0];
+    } 
+    toggle(tag: Tag){
+      const value = this.isSelected(tag.name)
+      if(value){
+        this.selectedTags = this.selectedTags.filter(item => item.name !== tag.name);
       }else{
         this.selectedTags.push(tag);
       }
@@ -36,7 +40,12 @@
         window.alert('标签不能为空');
       }else{
         tagListModel.create(newTag!); 
+        console.log(this.dataSource)
       }
+    }
+    @Watch('currentSelectedTags')
+    onCurrentSelectedTagsChange(){
+      this.selectedTags = this.currentSelectedTags;
     }
   }
 
