@@ -12,7 +12,7 @@
             />
         </div>
         <div class="button-wrapper">
-            <Button>删除标签</Button>
+            <Button @click.native="removeTag">删除标签</Button>
         </div>
     </Layout>
 
@@ -24,7 +24,7 @@
     import FormItem from '@/components/Money/FormItem.vue';
     import Button from '@/components/Button.vue';
 
-    @Component({components:{FormItem,Button}})
+@Component({components:{FormItem,Button}})
     export default class EditLabel extends Vue {
         created(){
             const id = this.$route.params.id;
@@ -35,6 +35,17 @@
             }else{
                 this.$router.replace('/404');
             }
+        }
+        removeTag(){
+            const tagId = this.$route.params.id;
+            const result = tagListModel.remove(tagId)    
+            if(result){
+                window.alert('删除成功')
+                this.$router.back();
+            }else{
+                window.alert('删除失败')
+            }
+
         }
     }
 </script>

@@ -7,6 +7,7 @@ type TagList = {
     fetch: () => Tag[];
     save: () => void;
     create: (tagName: string) => 'success' | 'duplicated' | 'void';
+    remove: (tagId: string) => boolean;
 };
 type RecordItem = {
   tags: Tag[];
