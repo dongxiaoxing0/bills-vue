@@ -2,11 +2,13 @@
   <Layout class-prefix="layout">
     <NumberPad :value.sync="record.amount" @new-record="updateRecordList"/>
     <Types :type.sync="record.type"/>
-    <FormItem 
-    filedName="备注"
-    placeholder="请输入备注"
-    :content.sync="record.notes"
-    />
+    <div class="notes">
+      <FormItem filedName="备注"
+                placeholder="请输入备注"
+                :content.sync="record.notes"
+      />
+    </div>
+
     <Tags :data-source.sync="tags" :currentSelectedTags.sync="record.tags"/>
   </Layout>
 </template>
@@ -56,5 +58,8 @@
   .layout-content {
     display: flex;
     flex-direction: column-reverse;
+  }
+  .notes{
+    padding: 12px 0;
   }
 </style>

@@ -53,6 +53,7 @@
 
 <style lang="scss" scoped>
   .tags {
+    background-color: white;
     font-size: 14px;
     padding: 16px;
     flex-grow: 1;
