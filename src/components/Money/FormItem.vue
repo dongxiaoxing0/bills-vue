@@ -17,7 +17,7 @@
     @Prop({required:true}) filedName!: string
     @Prop(String) placeholder?: string
     @Prop(String) content!: string
-    value = ''
+    value = this.content
     @Watch('value')
     onValueChange(value: string){
       this.$emit('update:content',value);
