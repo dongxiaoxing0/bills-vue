@@ -4,10 +4,10 @@
             <Icon name="left"></Icon>
             <span>编辑</span>
         </div>
-        <Notes 
+        <FormItem 
         filedName="标签名"
         placeholder="请输入标签名"
-        ></Notes>
+        />
     </Layout>
 
 </template>
@@ -15,9 +15,9 @@
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
     import tagListModel from '@/Models/tagListModel.ts';
-    import Notes from '@/components/Money/Notes.vue';
+    import FormItem from '@/components/Money/FormItem.vue';
 
-    @Component({components:{Notes}})
+    @Component({components:{FormItem}})
     export default class EditLabel extends Vue {
         created(){
             const id = this.$route.params.id;
