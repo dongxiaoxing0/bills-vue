@@ -8,7 +8,7 @@ type TagList = {
     save: () => void;
     create: (tagName: string) => 'success' | 'duplicated' | 'void';
     remove: (tagId: string) => boolean;
-    update: (tag: Tag) => Tag[];
+    update: (tagId: string,tagName: string) => 'success'|'duplicated'|'not found';
 };
 type RecordItem = {
   tags: Tag[];
