@@ -1,3 +1,4 @@
+import createId from '@/lib/createId';
 const itemName = 'tagList';
 
 const tagListModel: TagList = {
@@ -14,8 +15,8 @@ const tagListModel: TagList = {
         if (tags.indexOf(tagName) >= 0) {
             return 'duplicated';
         } else {
-            const newTag = {id:tagName,name:tagName}
-            this.data.push(newTag);
+            const id = createId().toString()
+            this.data.push({id:id,name:tagName});
             this.save();
             return 'success';
         }
