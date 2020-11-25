@@ -9,7 +9,8 @@
             <FormItem 
             filedName="标签名"
             placeholder="请输入标签名"
-            :content.sync="this.tag.name"
+            :content="this.tag.name"
+            @update:content="update"
             />
         </div>
         <div class="button-wrapper">
@@ -49,6 +50,10 @@
                 window.alert('删除失败')
             }
 
+        }
+        update(tagName: string){
+            (this.tag!).name = tagName;
+            tagListModel.update(this.tag!);
         }
         goBack(){
             this.$router.back();

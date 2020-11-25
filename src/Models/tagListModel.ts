@@ -35,6 +35,22 @@ const tagListModel: TagList = {
             window.alert('删除失败')
             return false
         }
+    },
+    update(tag: Tag){
+        const id = tag.id;
+        let index = -1;
+        for(let i = 0; i < this.data.length; i++){
+            if(this.data[i].id === id){
+                index = i;
+            }
+        }
+        if(index >= 0){
+            this.data[index].name = tag.name;
+            this.save();
+        }else{
+            window.alert('找不到标签');
+        }
+        return this.data
     }
 };
 export default tagListModel;
