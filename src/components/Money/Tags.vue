@@ -40,7 +40,6 @@
         window.alert('标签不能为空');
       }else{
         tagListModel.create(newTag!); 
-        console.log(this.dataSource)
       }
     }
     @Watch('currentSelectedTags')

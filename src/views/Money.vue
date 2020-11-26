@@ -31,7 +31,7 @@
   components: { NumberPad, Types, FormItem, Tags},
   })
   export default class Money extends Vue {
-    tags = tagListModel.data
+    tags = tagList
     record: RecordItem = {
       tags:[] as Tag[],
       notes:'',
@@ -40,15 +40,9 @@
     }
     recordList: RecordItem[] = recordList
     updateRecordList(){
-      const recordCopy = JSON.parse(JSON.stringify(this.record));
-      recordCopy.createdAt = new Date();
-      this.recordList.push(recordCopy);
+      recordListModel.create(this.record);
       this.record.notes = '';
       this.record.tags = [];
-    }
-    @Watch('recordList')
-    onRecordListChange() {
-      recordListModel.save(this.recordList);
     }
   }
   
