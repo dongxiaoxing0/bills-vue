@@ -9,7 +9,7 @@
         >
             <span>{{tag.name}}</span>
             <Icon name="right" /> 
-        </router-link>
+        </router-link>  
         
     </div>
     <div class="createTag-wrapper">
@@ -32,8 +32,11 @@
         tags = tagListModel.data
         createTag(){
             const tagName = window.prompt('请输入标签名');
+            console.log(tagName)
             if(tagName === ''){
                 window.alert('标签名不能为空')
+            }else if(tagName === null){
+                return;
             }else{
                 const message = tagListModel.create(tagName!);
                 if(message === 'success'){
