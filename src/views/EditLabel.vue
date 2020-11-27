@@ -14,8 +14,8 @@
             />
         </div>
         <div class="button-wrapper">
-            <Button @click.native="update(newName)">保存标签</Button>
-            <Button @click.native="removeTag">删除标签</Button>
+            <Button class="buttons" @click.native="update(newName)">保存标签</Button>
+            <Button :class-prefix="'editlabel'" class="buttons" @click.native="removeTag">删除标签</Button>
         </div>
     </Layout>
 
@@ -97,6 +97,12 @@
     text-align: center;
     padding: 16px;
     margin-top: 44-16px;
+    > .buttons{
+        margin:0 10px;
+    }
+    > button.editlabel-button{
+    background: darken(red,15%);
+  }
   }
 
 </style>

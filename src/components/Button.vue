@@ -1,12 +1,14 @@
 <template>
-    <button class="button"><slot/></button>
+    <button class="button" :class="classPrefix + '-button'"><slot/></button>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
-export default class Button extends Vue {}
+export default class Button extends Vue {
+  @Prop(String) classPrefix: string|undefined
+}
 </script>
 
 <style lang="scss" scoped>
@@ -23,4 +25,5 @@ export default class Button extends Vue {}
       margin-top: 44-16px;
     }
   }
+
 </style>
