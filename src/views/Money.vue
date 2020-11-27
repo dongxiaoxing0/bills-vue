@@ -20,9 +20,7 @@
   import FormItem from '@/components/Money/FormItem.vue';
   import Tags from '@/components/Money/Tags.vue';
   import {Component,Watch } from 'vue-property-decorator';
-  import recordListModel from '@/Models/recordListModel.ts';
 
-  const recordList = recordListModel.fetch();
 
 
   @Component({
@@ -35,12 +33,12 @@
       type:'-',
       amount: 0,
     }
-    recordList: RecordItem[] = recordList
     created(){
-      this.$store.commit('fetchTags');
+      this.$store.commit('fetchTagList');
+      this.$store.commit('fetchRecordList');
     }
     updateRecordList(){
-      recordListModel.create(this.record);
+      this.$store.commit('createRecord',this.record);
       this.record.notes = '';
       this.record.tags = [];
     }

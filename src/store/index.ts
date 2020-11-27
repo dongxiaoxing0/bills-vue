@@ -3,15 +3,17 @@ import Vuex from 'vuex';
 import createId from '@/lib/createId.ts';
 type MyState = {
   tagList: Tag[];
+  recordList: RecordItem[];
 }
 
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     tagList: [],
+    recordList:[]
   } as MyState,
   mutations: {
-    fetchTags(state) {
+    fetchTagList(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
     },
     saveTags(state) {
@@ -59,6 +61,21 @@ const store = new Vuex.Store({
       } else {
         window.alert('保存失败');
       }
+    },
+
+    fetchRecordList(state){
+        state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
+    },
+    saveRecords(state){
+        window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
+    },
+    createRecord(state,record: RecordItem){
+      console.log(1)
+        const recordCopy = JSON.parse(JSON.stringify(record));
+        console.log(2)
+        recordCopy.createdAt = new Date();
+        state.recordList.push(recordCopy);
+        store.commit('saveRecords');
     }
   },
   actions: {

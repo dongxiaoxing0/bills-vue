@@ -38,7 +38,7 @@
         }
         created(){
             const id = this.$route.params.id;
-            this.$store.commit('fetchTags');
+            this.$store.commit('fetchTagList');
             const tags = this.$store.state.tagList;
             let tag: Tag|undefined;
             if(!tags){

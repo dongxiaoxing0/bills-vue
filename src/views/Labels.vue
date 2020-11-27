@@ -36,7 +36,7 @@
         })
     export default class Labels extends Vue{
         created(){
-            this.$store.commit('fetchTags');
+            this.$store.commit('fetchTagList');
         }
         createTag(){
             const tagName = window.prompt('请输入标签名');

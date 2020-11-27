@@ -28,7 +28,7 @@
     @Prop(Array)currentSelectedTags!: Tag[];
     selectedTags = this.currentSelectedTags;
     created(){
-      this.$store.commit('fetchTags');
+      this.$store.commit('fetchTagList');
     }
     isSelected(tagName: string){
       return this.selectedTags.filter(item => item.name === tagName)[0];
