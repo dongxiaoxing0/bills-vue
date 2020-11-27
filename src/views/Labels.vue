@@ -21,20 +21,18 @@
 <script lang="ts">
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
-    import tagListModel from '@/Models/tagListModel.ts';
     import Button from '@/components/Button.vue';
 
 
 
     @Component({
         components:{Button},
-        computed:{
-            tags(){
-                return this.$store.state.tagList;
-            }
-        }
         })
     export default class Labels extends Vue{
+        get tags(){
+                return this.$store.state.tagList;
+            }
+
         created(){
             this.$store.commit('fetchTagList');
         }

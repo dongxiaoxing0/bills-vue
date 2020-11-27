@@ -16,17 +16,14 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component,Prop,Watch } from 'vue-property-decorator';
-  import tagListModel from '@/Models/tagListModel';
-  @Component({
-    computed:{
-      tags(){
-        return this.$store.state.tagList;
-      }
-    }
-  })
+  
+  @Component
   export default class Tags extends Vue {
     @Prop(Array)currentSelectedTags!: Tag[];
     selectedTags = this.currentSelectedTags;
+    get tags(){
+        return this.$store.state.tagList;
+    }
     created(){
       this.$store.commit('fetchTagList');
     }
