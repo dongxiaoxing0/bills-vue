@@ -4,7 +4,7 @@
         <button @click="create">新增标签</button>
       </div>
       <ul class="current">
-        <li v-for="tag in dataSource"
+        <li v-for="tag in tags"
         @click="toggle(tag)"
         :class="{selected:isSelected(tag.name)}"
         :key="tag.id"
@@ -17,11 +17,19 @@
   import Vue from 'vue';
   import { Component,Prop,Watch } from 'vue-property-decorator';
   import tagListModel from '@/Models/tagListModel';
-  @Component
+  @Component({
+    computed:{
+      tags(){
+        return this.$store.state.tagList;
+      }
+    }
+  })
   export default class Tags extends Vue {
-    @Prop(Array)dataSource!: Tag[];
     @Prop(Array)currentSelectedTags!: Tag[];
     selectedTags = this.currentSelectedTags;
+    created(){
+      this.$store.commit('fetchTags');
+    }
     isSelected(tagName: string){
       return this.selectedTags.filter(item => item.name === tagName)[0];
     } 
@@ -38,8 +46,10 @@
       const newTag = window.prompt('请输入标签名');
       if(newTag ===''){
         window.alert('标签不能为空');
-      }else{
-        tagListModel.create(newTag!); 
+      }else if(newTag === null){
+        return
+      }{
+        this.$store.commit('createTag',newTag); 
       }
     }
     @Watch('currentSelectedTags')

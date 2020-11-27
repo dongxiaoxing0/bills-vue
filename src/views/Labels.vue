@@ -25,25 +25,27 @@
     import Button from '@/components/Button.vue';
 
 
-    tagListModel.fetch();
 
-    @Component({components:{Button}})
+    @Component({
+        components:{Button},
+        computed:{
+            tags(){
+                return this.$store.state.tagList;
+            }
+        }
+        })
     export default class Labels extends Vue{
-        tags = tagListModel.data
+        created(){
+            this.$store.commit('fetchTags');
+        }
         createTag(){
             const tagName = window.prompt('请输入标签名');
-            console.log(tagName)
             if(tagName === ''){
                 window.alert('标签名不能为空')
             }else if(tagName === null){
                 return;
             }else{
-                const message = tagListModel.create(tagName!);
-                if(message === 'success'){
-                    window.alert('添加成功');
-                }else if(message === 'duplicated'){
-                    window.alert('标签名已经存在');
-                }
+                this.$store.commit('createTag',tagName);
             }
         }
     }

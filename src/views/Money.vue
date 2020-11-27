@@ -9,7 +9,7 @@
       />
     </div>
 
-    <Tags :data-source.sync="tags" :currentSelectedTags.sync="record.tags"/>
+    <Tags :currentSelectedTags.sync="record.tags"/>
   </Layout>
 </template>
 
@@ -21,17 +21,14 @@
   import Tags from '@/components/Money/Tags.vue';
   import {Component,Watch } from 'vue-property-decorator';
   import recordListModel from '@/Models/recordListModel.ts';
-  import tagListModel from '@/Models/tagListModel.ts';
 
   const recordList = recordListModel.fetch();
-  const tagList = tagListModel.fetch();
 
 
   @Component({
-  components: { NumberPad, Types, FormItem, Tags},
+  components: { NumberPad, Types, FormItem, Tags}
   })
   export default class Money extends Vue {
-    tags = tagList
     record: RecordItem = {
       tags:[] as Tag[],
       notes:'',
@@ -39,6 +36,9 @@
       amount: 0,
     }
     recordList: RecordItem[] = recordList
+    created(){
+      this.$store.commit('fetchTags');
+    }
     updateRecordList(){
       recordListModel.create(this.record);
       this.record.notes = '';

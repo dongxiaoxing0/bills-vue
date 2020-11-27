@@ -22,18 +22,26 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import tagListModel from '@/Models/tagListModel.ts';
     import FormItem from '@/components/Money/FormItem.vue';
     import Button from '@/components/Button.vue';
 
 
-@Component({components:{FormItem,Button}})
+    @Component({
+        components:{FormItem,Button}
+    })
     export default class EditLabel extends Vue {
         tag: Tag|undefined
         created(){
             const id = this.$route.params.id;
-            tagListModel.fetch();
-            const tag = tagListModel.data.filter(item => item.id === id)[0];
+            this.$store.commit('fetchTags');
+            const tags = this.$store.state.tagList;
+            console.log(tags)
+            let tag: Tag|undefined;
+            if(!tags){
+                this.$router.replace('/404');
+            }else{
+                tag = tags.filter((item: Tag) => item.id === id)[0];
+            }
             if(tag){
                this.tag = tag;
             }else{
@@ -42,21 +50,14 @@
         }
         removeTag(){
             const tagId = this.$route.params.id;
-            const result = tagListModel.remove(tagId)    
-            if(result){
-                window.alert('删除成功')
-                this.$router.back();
-            }else{
-                window.alert('删除失败')
-            }
-
+            this.$store.commit('removeTag',tagId);
+            console.log(1)
+            this.$router.back();
+            console.log(2)
         }
         update(tagName: string){
             if(this.tag){
-                const result = tagListModel.update(this.tag.id,tagName);
-                if(result === 'success'){
-                    this.tag.name = tagName;
-                }
+                this.$store.commit('updateTag',{id:this.tag.id,name:tagName});
             }
         }
         goBack(){
