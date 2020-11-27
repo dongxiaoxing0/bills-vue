@@ -1,10 +1,10 @@
 <template>
       <label class="formItem">
-        <span class="name">{{this.filedName}}</span>
+        <span class="name">{{filedName}}</span>
         <input 
         v-model="value" 
         type="text" 
-        :placeholder="this.placeholder"
+        :placeholder="placeholder"
         >
       </label>
 </template>

@@ -47,9 +47,11 @@ const store = new Vuex.Store({
       const oldTag = state.tagList.filter(item => item.id === id)[0];
       if (oldTag) {
         const nameList = state.tagList.map(item => item.name);
-        if (nameList.indexOf(name) >= 0) {
-          return 'duplicated';
-        } else {
+        if (nameList.indexOf(name) >= 0 && name !== oldTag.name) {
+          window.alert('标签名已经存在');
+        } else if(name === oldTag.name){
+          window.alert('保存成功');
+        }else {
           oldTag.name = name;
           store.commit('saveTags');
           window.alert('保存成功');

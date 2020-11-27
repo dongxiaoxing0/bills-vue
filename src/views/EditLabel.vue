@@ -9,11 +9,12 @@
             <FormItem 
             filedName="标签名"
             placeholder="请输入标签名"
-            :content="this.tag.name"
-            @update:content="update"
+            :content="tag.name"
+            @update:content="newName = $event"
             />
         </div>
         <div class="button-wrapper">
+            <Button @click.native="update(newName)">保存标签</Button>
             <Button @click.native="removeTag">删除标签</Button>
         </div>
     </Layout>
@@ -31,11 +32,14 @@
     })
     export default class EditLabel extends Vue {
         tag: Tag|undefined
+        newName: string|undefined
+        get tags(){
+            return this.$store.state.tagList;
+        }
         created(){
             const id = this.$route.params.id;
             this.$store.commit('fetchTags');
             const tags = this.$store.state.tagList;
-            console.log(tags)
             let tag: Tag|undefined;
             if(!tags){
                 this.$router.replace('/404');
@@ -47,18 +51,19 @@
             }else{
                 this.$router.replace('/404');
             }
+            if(this.tag){
+                this.newName = this.tag.name;
+            } 
         }
         removeTag(){
             const tagId = this.$route.params.id;
             this.$store.commit('removeTag',tagId);
-            console.log(1)
             this.$router.back();
-            console.log(2)
         }
         update(tagName: string){
-            if(this.tag){
+                if(this.tag){
                 this.$store.commit('updateTag',{id:this.tag.id,name:tagName});
-            }
+                }
         }
         goBack(){
             this.$router.back();
