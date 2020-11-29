@@ -13,7 +13,7 @@
             @update:content="newName = $event"
             />
         </div>
-        <div class="button-wrapper">
+        <div class="button-wrapper" :class="tag.name">
             <Button class="buttons" @click.native="update(newName)">保存标签</Button>
             <Button :class-prefix="'editlabel'" class="buttons" @click.native="removeTag">删除标签</Button>
         </div>
