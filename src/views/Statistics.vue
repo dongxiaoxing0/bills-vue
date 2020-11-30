@@ -3,6 +3,14 @@
     <div>
         <Tabs :dataSource="typeList" :selectedValue.sync="typeValue" :classPrefix="'type'" />
         <Tabs :dataSource="intervalList" :selectedValue.sync="intervalValue" :classPrefix="'interval'" />
+        <ol>
+            <li v-for="(group,index) in result" :key="index">
+                <h2>{{group.title}}</h2>
+               <ol>
+                   <li v-for="item in group.items" :key="item.createdAt">{{item.tags}}{{item.notes}}{{item.amount}}</li>
+               </ol>
+            </li>
+        </ol>
     </div>
 </Layout>
 </template>
@@ -27,6 +35,23 @@
             {text:'按月',value:'month'},
         ]
         intervalValue = 'day'
+        get recordList(){
+            return (this.$store.state as MyState).recordList;
+        }
+        get result(){
+            const {recordList} = this;
+            const result: {[key: string]: {title: string;items: RecordItem[]}} = {}
+            for(let i = 0; i < recordList.length; i++){
+                const date = recordList[i].createdAt!.split('T')[0];
+                result[date] = result[date] || {title:date,items:[]};
+                result[date].items.push(recordList[i]);
+            }
+            return result;
+        }
+        beforeCreate(){
+            this.$store.commit('fetchRecordList');
+        }
+        
     }
 </script>
 

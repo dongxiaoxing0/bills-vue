@@ -14,6 +14,10 @@ type RecordItem = {
   tags: Tag[];
   notes: string;
   type: string;
-  amount: number;
-  createdAt?: Date;
+  amount: number; 
+  createdAt?: string;
+};
+type MyState = {
+  tagList: Tag[];
+  recordList: RecordItem[];
 };

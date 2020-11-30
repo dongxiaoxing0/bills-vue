@@ -1,10 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createId from '@/lib/createId.ts';
-type MyState = {
-  tagList: Tag[];
-  recordList: RecordItem[];
-}
+
 
 Vue.use(Vuex);
 const store = new Vuex.Store({
@@ -73,7 +70,7 @@ const store = new Vuex.Store({
       console.log(1)
         const recordCopy = JSON.parse(JSON.stringify(record));
         console.log(2)
-        recordCopy.createdAt = new Date();
+        recordCopy.createdAt = new Date().toISOString();
         state.recordList.push(recordCopy);
         store.commit('saveRecords');
     }
