@@ -4,10 +4,14 @@
         <Tabs :dataSource="typeList" :selectedValue.sync="typeValue" :classPrefix="'type'" />
         <Tabs :dataSource="intervalList" :selectedValue.sync="intervalValue" :classPrefix="'interval'" />
         <ol>
-            <li v-for="(group,index) in result" :key="index">
-                <h2>{{group.title}}</h2>
+            <li v-for="group in result" :key="group.title">
+                <h2 class="title">{{group.title}}</h2>
                <ol>
-                   <li v-for="item in group.items" :key="item.createdAt">{{item.tags}}{{item.notes}}{{item.amount}}</li>
+                   <li class="record" v-for="item in group.items" :key="item.createdAt">
+                       <span>{{tagString(item.tags)}}</span>
+                       <span class="notes">{{item.notes}}</span>
+                       <span>￥{{item.amount}}</span>
+                    </li>
                </ol>
             </li>
         </ol>
@@ -51,6 +55,10 @@
         beforeCreate(){
             this.$store.commit('fetchRecordList');
         }
+        tagString(tags: Tag[]){
+            const tagNames = tags && tags.map(item => item.name);
+            return tagNames.length === 0 ? '无' : tagNames.join(',');
+        }
         
     }
 </script>
@@ -70,4 +78,23 @@
         height:48px;
     }
 }
+%item {
+    padding: 8px 16px;
+    line-height: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+  .title {
+    @extend %item;
+  }
+  .record {
+    background: white;
+    @extend %item;
+  }
+  .notes {
+    margin-right: auto;
+    margin-left: 16px;
+    color: #999;
+  }
 </style>
