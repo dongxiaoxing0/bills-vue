@@ -2,7 +2,7 @@
 <Layout>
     <div>
         <Tabs :dataSource="typeList" :selectedValue.sync="typeValue" :classPrefix="'type'" />
-        <ol>
+        <ol v-if="recordList.length !== 0">
             <li v-for="group in result" :key="group.title">
                 <h2 class="title">{{titleFormat(group.title)}}</h2>
                <ol>
@@ -14,6 +14,9 @@
                </ol>
             </li>
         </ol>
+        <p v-else class="none">
+            目前没有记录
+        </p>
     </div>
 </Layout>
 </template>
@@ -116,5 +119,9 @@
     margin-right: auto;
     margin-left: 16px;
     color: #999;
+  }
+  .none{
+      text-align: center;
+      padding-top:10px;
   }
 </style>
