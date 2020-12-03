@@ -39,11 +39,19 @@
         createTag(){
             const tagName = window.prompt('请输入标签名');
             if(tagName === ''){
-                window.alert('标签名不能为空')
+                window.alert('标签名不能为空');
+                return;
             }else if(tagName === null){
                 return;
             }else{
                 this.$store.commit('createTag',tagName);
+                if(this.$store.state.createTagError){
+                    if(this.$store.state.createTagError.message === 'tag name duplicated'){
+                        window.alert('标签名已经存在');
+                    }
+                }else{
+                    window.alert('创建成功');
+                }
             }
         }
     }

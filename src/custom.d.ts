@@ -20,4 +20,5 @@ type RecordItem = {
 type MyState = {
   tagList: Tag[];
   recordList: RecordItem[];
+  createTagError: Error|null;
 };

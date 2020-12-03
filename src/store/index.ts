@@ -7,24 +7,31 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     tagList: [],
-    recordList:[]
+    recordList:[],
+    createTagError:null,
   } as MyState,
   mutations: {
     fetchTagList(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+      if(!state.tagList||state.tagList.length === 0){
+        store.commit('createTag','衣');
+        store.commit('createTag','食');
+        store.commit('createTag','住');
+        store.commit('createTag','行');
+      }
     },
     saveTags(state) {
       window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
     },
     createTag(state, tagName: string) {
+      state.createTagError = null;
       const tags = state.tagList.map(value => value.name);
       if(tags.indexOf(tagName) >= 0) {
-        window.alert('标签名已经存在')
+        state.createTagError = new Error('tag name duplicated');
       }else {
         const id = createId().toString();
         state.tagList.push({ id: id, name: tagName });
         store.commit('saveTags');
-        window.alert('添加成功');
       }
     },
     removeTag(state, tagId: string) {
