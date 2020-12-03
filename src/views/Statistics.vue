@@ -4,7 +4,7 @@
         <Tabs :dataSource="typeList" :selectedValue.sync="typeValue" :classPrefix="'type'" />
         <ol v-if="recordList.length !== 0">
             <li v-for="group in result" :key="group.title">
-                <h2 class="title">{{titleFormat(group.title)}}</h2>
+                <h2 class="title">{{titleFormat(group.title)}}<span>{{group.total}}</span></h2>
                <ol>
                    <li class="record" v-for="item in group.items" :key="item.createdAt">
                        <span>{{tagString(item.tags)}}</span>
@@ -43,21 +43,21 @@
             const {recordList} = this;
             if(recordList.length === 0){return [];}
             const copy: RecordItem[] = JSON.parse(JSON.stringify(recordList));
-            console.log(this.typeValue)
             const sortList = 
                 copy.filter(item => item.type === this.typeValue)
                     .sort((x: RecordItem,y: RecordItem) => dayjs(y.createdAt).valueOf() - dayjs(x.createdAt).valueOf());
-            const result: {title: string;items: RecordItem[]}[] = [];
-            result.push({title:(sortList[0].createdAt)!,items:[sortList[0]]});
+            const result: {title: string;total: number;items: RecordItem[]}[] = [];
+            result.push({title:(sortList[0].createdAt)!,total:0,items:[sortList[0]]});
             for(let i = 1; i < sortList.length; i++){
                 const current = sortList[i];
                 const last = result[result.length-1];
                 if(dayjs(current.createdAt).isSame(dayjs(last.title),'day')){
                     last.items.push(current);
                 }else{
-                    result.push({title:current.createdAt!,items:[current]});
+                    result.push({title:current.createdAt!,total:0,items:[current]});
                 }
             }
+            result.map(item => item.total = item.items.reduce((sum,value) => sum + value.amount,0))
 
             return result;
         }
