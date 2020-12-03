@@ -2,7 +2,6 @@
 <Layout>
     <div>
         <Tabs :dataSource="typeList" :selectedValue.sync="typeValue" :classPrefix="'type'" />
-        <Tabs :dataSource="intervalList" :selectedValue.sync="intervalValue" :classPrefix="'interval'" />
         <ol>
             <li v-for="group in result" :key="group.title">
                 <h2 class="title">{{titleFormat(group.title)}}</h2>
@@ -34,23 +33,29 @@
             {text:'收入',value:'+'}
         ]
         typeValue = '-'
-        intervalList = [
-            {text:'按天',value:'day'},
-            {text:'按周',value:'week'},
-            {text:'按月',value:'month'},
-        ]
-        intervalValue = 'day'
         get recordList(){
             return (this.$store.state as MyState).recordList;
         }
         get result(){
             const {recordList} = this;
-            const result: {[key: string]: {title: string;items: RecordItem[]}} = {}
-            for(let i = 0; i < recordList.length; i++){
-                const date = recordList[i].createdAt!.split('T')[0];
-                result[date] = result[date] || {title:date,items:[]};
-                result[date].items.push(recordList[i]);
+            if(recordList.length === 0){return [];}
+            const copy: RecordItem[] = JSON.parse(JSON.stringify(recordList));
+            console.log(this.typeValue)
+            const sortList = 
+                copy.filter(item => item.type === this.typeValue)
+                    .sort((x: RecordItem,y: RecordItem) => dayjs(y.createdAt).valueOf() - dayjs(x.createdAt).valueOf());
+            const result: {title: string;items: RecordItem[]}[] = [];
+            result.push({title:(sortList[0].createdAt)!,items:[sortList[0]]});
+            for(let i = 1; i < sortList.length; i++){
+                const current = sortList[i];
+                const last = result[result.length-1];
+                if(dayjs(current.createdAt).isSame(dayjs(last.title),'day')){
+                    last.items.push(current);
+                }else{
+                    result.push({title:current.createdAt!,items:[current]});
+                }
             }
+
             return result;
         }
         beforeCreate(){
@@ -81,9 +86,9 @@
 <style lang="scss" scoped>
 ::v-deep {
     .type-tabs{
-        background-color: #fff;
+        background-color: #c4c4c4;
         > li.type-tab-item.selected{
-            background-color:#c4c4c4;
+            background-color:#fff;
         }
         > li.selected::after{
             display:none;

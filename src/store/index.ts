@@ -67,9 +67,7 @@ const store = new Vuex.Store({
         window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
     },
     createRecord(state,record: RecordItem){
-      console.log(1)
         const recordCopy = JSON.parse(JSON.stringify(record));
-        console.log(2)
         recordCopy.createdAt = new Date().toISOString();
         state.recordList.push(recordCopy);
         store.commit('saveRecords');
