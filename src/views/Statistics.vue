@@ -2,7 +2,7 @@
 <Layout>
     <div>
         <Tabs :dataSource="typeList" :selectedValue.sync="typeValue" :classPrefix="'type'" />
-        <ol v-if="recordList.length !== 0">
+        <ol v-if="result.length !== 0">
             <li v-for="group in result" :key="group.title">
                 <h2 class="title">{{titleFormat(group.title)}}<span>{{group.total}}</span></h2>
                <ol>
@@ -46,6 +46,7 @@
             const sortList = 
                 copy.filter(item => item.type === this.typeValue)
                     .sort((x: RecordItem,y: RecordItem) => dayjs(y.createdAt).valueOf() - dayjs(x.createdAt).valueOf());
+            if(sortList.length === 0){return [];}
             const result: {title: string;total: number;items: RecordItem[]}[] = [];
             result.push({title:(sortList[0].createdAt)!,total:0,items:[sortList[0]]});
             for(let i = 1; i < sortList.length; i++){
