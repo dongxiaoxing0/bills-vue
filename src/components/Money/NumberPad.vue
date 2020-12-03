@@ -1,6 +1,6 @@
 <template>
     <div class="numberPad">
-      <div class="output">{{ output}}</div>
+      <div class="output">{{output}}</div>
       <div class="buttons">
         <button @click="inputContent">1</button>
         <button @click="inputContent">2</button>
@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component,Prop } from 'vue-property-decorator';
+import { Component,Prop, Watch } from 'vue-property-decorator';
 @Component 
 export default class NumberPad extends Vue{
   @Prop(Number) readonly value!: number;
@@ -52,8 +52,11 @@ export default class NumberPad extends Vue{
   }
   ok(){
     this.$emit('update:value',parseFloat(this.output));
-    this.$emit('new-record',this.output)
-    this.output = '0';
+    this.$emit('new-record',this.output);
+  }
+  @Watch('value')
+  onValueChange(value: number){
+    this.output = value.toString();
   }
 }
 </script>

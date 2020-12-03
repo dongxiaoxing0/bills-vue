@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     tagList: [],
     recordList:[],
     createTagError:null,
+    createRecordError:null
   } as MyState,
   mutations: {
     fetchTagList(state) {
@@ -74,10 +75,18 @@ const store = new Vuex.Store({
         window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
     },
     createRecord(state,record: RecordItem){
+      state.createRecordError = null;
+      if(record.tags.length > 0){
         const recordCopy = JSON.parse(JSON.stringify(record));
         recordCopy.createdAt = new Date().toISOString();
         state.recordList.push(recordCopy);
         store.commit('saveRecords');
+      }else{
+        window.alert('请至少选择一个标签');
+        state.createRecordError = new Error('require tags');
+        return;
+      }
+ 
     }
   },
   actions: {

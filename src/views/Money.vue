@@ -43,8 +43,11 @@
     }
     updateRecordList(){
       this.$store.commit('createRecord',this.record);
-      this.record.notes = '';
-      this.record.tags = [];
+      if(this.$store.state.createRecordError === null){
+        this.record.notes = '';
+        this.record.tags = [];
+        this.record.amount = 0;
+      }
     }
   }
   
