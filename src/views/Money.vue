@@ -1,5 +1,5 @@
 <template>
-  <Layout class-prefix="layout">
+  <Layout class-prefix="layout" :style="{height:h+'px'}">
     <NumberPad :value.sync="record.amount" @new-record="updateRecordList"/>
     <Tabs :dataSource="typeList" :selectedValue.sync="record.type" />
     <div class="notes">
@@ -36,6 +36,10 @@
       notes:'',
       type:'-',
       amount: 0,
+    }
+    h: number|undefined = undefined
+    beforCreated(){
+      this.h = document.body.clientHeight; 
     }
     created(){
       this.$store.commit('fetchTagList');
