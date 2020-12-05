@@ -15,6 +15,16 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333;
+
+}
+#app{
+  max-width: 500px;
+  margin: 0 auto;
   background: #f5f5f5;
+}
+@media (min-width:(500px)) {
+  #app{
+    border: 1px solid #f5f5f5;
+  }
 }
 </style>
